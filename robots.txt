@@ -7,10 +7,6 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-# Запрещаем индексацию служебных файлов
-Disallow: /style.css
-Disallow: /script.js
-
 # Указываем путь к карте сайта
 Sitemap: https://mastera-tbilisi.ge/sitemap.xml
 
