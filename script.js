@@ -32,7 +32,8 @@ const i18n = {
 };
 
 // Глобальная переменная текущего языка
-let currentLang = 'ru';
+// window.__FORCE_LANG__ устанавливается в языковых подстраницах (/ru/, /ge/, /en/)
+let currentLang = window.__FORCE_LANG__ || 'ru';
 
 // Вспомогательная функция — получить перевод
 function t(key) {
@@ -248,6 +249,13 @@ function initFAQ() {
 
 function initLanguageSwitcher() {
     const langButtons = document.querySelectorAll('.lang-btn');
+
+    // На языковых подстраницах (/ru/, /ge/, /en/) язык задан принудительно
+    if (window.__FORCE_LANG__) {
+        setLanguage(window.__FORCE_LANG__);
+        return;
+    }
+
     const browserLang = navigator.language || navigator.userLanguage;
 
     let defaultLang = 'ru';

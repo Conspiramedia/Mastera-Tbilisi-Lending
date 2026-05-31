@@ -1775,6 +1775,7 @@ footer {
     letter-spacing: 0.5px;
     min-width: 60px;
     text-align: center;
+    text-decoration: none;
 }
 
 .lang-btn:hover {
