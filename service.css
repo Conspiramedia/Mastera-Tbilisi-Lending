@@ -1,0 +1,166 @@
+/* ============================================
+   СТИЛИ ДЛЯ СТРАНИЦ УСЛУГ
+   santehnik-tbilisi / elektrik-tbilisi / master-na-chas-tbilisi
+   ============================================ */
+
+.service-hero {
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.service-hero h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: #FDB913;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.service-hero .lead {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.service-cta-top {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+/* Прайс-таблица */
+.price-table {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+}
+
+.price-table h2 {
+    color: #06FFA5;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.95rem;
+}
+
+.price-row:last-child {
+    border-bottom: none;
+}
+
+.price-row:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+}
+
+.price-name {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.price-val {
+    color: #FDB913;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+/* Районы */
+.districts {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.districts h2 {
+    color: #06FFA5;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.districts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.district-tag {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #FDB913;
+    color: #e5e5e5;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* Хлебные крошки (скрыты визуально, но остаются в Schema.org) */
+.breadcrumb {
+    max-width: 700px;
+    margin: 1rem auto 0;
+    padding: 0 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.breadcrumb a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #FDB913;
+}
+
+/* Вспомогательные блоки */
+.service-steps {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+}
+
+.service-steps h2 {
+    color: #06FFA5;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.service-faq {
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+}
+
+.service-faq h2 {
+    color: #06FFA5;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.service-back {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.service-back a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.service-back a:hover {
+    color: #FDB913;
+}
