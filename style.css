@@ -134,7 +134,9 @@ body {
 header {
     position: relative;
     padding: 2rem 5%;
-    background: var(--dark-concrete);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-bottom: 4px solid var(--construction-yellow);
     z-index: 10;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
