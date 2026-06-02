@@ -64,6 +64,27 @@
 }
 
 /* Прайс-таблица */
+.price-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.2), rgba(253, 185, 19, 0.05));
+    border: 3px solid var(--construction-yellow);
+    box-shadow: 0 0 25px rgba(253, 185, 19, 0.2);
+    flex-shrink: 0;
+}
+
+.price-icon svg {
+    width: 36px;
+    height: 36px;
+    color: var(--construction-yellow);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
 .price-table {
     max-width: 700px;
     margin: 3rem auto 3rem;
