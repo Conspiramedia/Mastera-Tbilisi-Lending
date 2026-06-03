@@ -316,6 +316,60 @@ header {
     }
 }
 
+.audience-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--safety-green);
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.8s ease-out 0.4s backwards;
+    box-shadow: 0 4px 15px rgba(6, 255, 165, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.audience-link svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    flex-shrink: 0;
+    animation: spin-slow 8s linear infinite;
+}
+
+.audience-link-text {
+    background: linear-gradient(
+        90deg,
+        #fff 0%,
+        #fff 38%,
+        rgba(255,255,255,0.2) 42%,
+        rgba(255,255,255,1) 45%,
+        rgba(255,255,255,0.2) 48%,
+        #fff 52%,
+        #fff 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-shine 5s ease-in-out infinite;
+}
+
+.audience-link:hover {
+    box-shadow: 0 4px 25px rgba(6, 255, 165, 0.5);
+    transform: translateY(-1px);
+}
+
 /* ============================================
    HERO SECTION
    ============================================ */
@@ -702,6 +756,15 @@ header {
     50% {
         transform: scale(1.05);
     }
+}
+
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes text-shine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .section-icon {
@@ -1589,6 +1652,13 @@ footer {
     .online-indicator {
         width: 8px;
         height: 8px;
+    }
+
+    .audience-link {
+        flex: 1 1 100%;
+        justify-content: center;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
     }
     
     .online-indicator::before,
