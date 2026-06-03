@@ -1141,7 +1141,7 @@ header {
 
 /* Отзывы клиентов — зеленая обводка */
 .testimonials-clients .testimonial-card {
-    border: 1px solid var(--safety-green);
+    border: 1px solid var(--construction-yellow);
 }
 
 /* Отзывы мастеров — желтая обводка */
