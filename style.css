@@ -344,10 +344,7 @@ header {
     color: white;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     flex-shrink: 0;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    animation: spin-smooth 8s ease-in-out infinite;
+    animation: spin-slow 8s linear infinite;
 }
 
 .audience-link-text {
@@ -663,7 +660,7 @@ header {
 
 .section-card:nth-child(1) {
     animation-delay: 0.8s;
-    border-color: var(--safety-green);
+    border-color: var(--construction-yellow);
 }
 
 .section-card:nth-child(2) {
@@ -686,7 +683,7 @@ header {
 .section-card:nth-child(1):hover {
     background: rgba(0, 0, 0, 0.5);
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(6, 255, 165, 0.2);
+    box-shadow: 0 20px 40px rgba(253, 185, 19, 0.2);
 }
 
 .section-card:nth-child(2):hover {
@@ -719,19 +716,19 @@ header {
 
 /* Круглая рамка для иконки клиентов (зеленая) */
 .icon-clients {
-    background: radial-gradient(circle at 30% 30%, rgba(6, 255, 165, 0.15), rgba(6, 255, 165, 0.05));
-    border: 3px solid var(--safety-green);
+    background: radial-gradient(circle at 30% 30%, rgba(253, 185, 19, 0.15), rgba(253, 185, 19, 0.05));
+    border: 3px solid var(--construction-yellow);
     box-shadow: 
-        0 0 30px rgba(6, 255, 165, 0.3),
-        inset 0 0 20px rgba(6, 255, 165, 0.1);
+        0 0 30px rgba(253, 185, 19, 0.3),
+        inset 0 0 20px rgba(253, 185, 19, 0.1);
 }
 
 .icon-clients:hover {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.1) rotate(-5deg);
     box-shadow: 
-        0 0 50px rgba(6, 255, 165, 0.6),
-        inset 0 0 30px rgba(6, 255, 165, 0.2);
-    border-color: rgba(6, 255, 165, 1);
+        0 0 50px rgba(253, 185, 19, 0.6),
+        inset 0 0 30px rgba(253, 185, 19, 0.2);
+    border-color: rgba(253, 185, 19, 1);
 }
 
 /* Круглая рамка для иконки мастеров (желтая) */
@@ -761,10 +758,8 @@ header {
     }
 }
 
-@keyframes spin-smooth {
-    0%   { transform: rotate(0deg);   opacity: 0.85; }
-    50%  { transform: rotate(180deg); opacity: 1; }
-    100% { transform: rotate(360deg); opacity: 0.85; }
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
 }
 
 @keyframes text-shine {
@@ -1662,8 +1657,8 @@ footer {
     .audience-link {
         flex: 1 1 100%;
         justify-content: center;
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
     }
     
     .online-indicator::before,
