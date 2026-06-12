@@ -610,12 +610,22 @@ function initClientPhotoUpload() {
     input.accept = 'image/*';
     input.multiple = true;
     input.className = 'lead-photo-input';
+    // Прячем нативный input: его текст («Выбрать файлы / Файлы не выбраны») задаётся
+    // локалью браузера и не переводится. Вместо него — своя кнопка с переводом.
+
+    // Кастомная кнопка вместо нативной «Выбрать файлы»
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'lead-photo-btn';
+    btn.textContent = t('photoAdd');
+    btn.addEventListener('click', () => input.click());
 
     const previews = document.createElement('div');
     previews.className = 'lead-photo-previews';
 
     wrap.appendChild(label);
     wrap.appendChild(input);
+    wrap.appendChild(btn);
     wrap.appendChild(previews);
 
     // Вставляем перед блоком согласия/кнопкой отправки (или в конец формы)

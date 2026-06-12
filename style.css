@@ -2729,13 +2729,21 @@ footer {
     color: rgba(255, 255, 255, 0.85);
 }
 
+/* Нативный input скрыт — его текст задаётся локалью браузера и не переводится */
 .lead-photo-input {
-    cursor: pointer;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
-.lead-photo-input::file-selector-button {
+.lead-photo-btn {
+    align-self: flex-start;
     padding: 0.5rem 1rem;
-    margin-right: 0.75rem;
     border: none;
     border-radius: 8px;
     background: var(--construction-yellow);
@@ -2743,6 +2751,10 @@ footer {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     cursor: pointer;
+}
+
+.lead-photo-btn:hover {
+    filter: brightness(0.95);
 }
 
 .lead-photo-previews {
