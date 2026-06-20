@@ -14,7 +14,6 @@ const i18n = {
         telegramInvalid:     'Пожалуйста, введите корректный Telegram username (например: @username) или номер телефона',
         contactRequired:     'Пожалуйста, заполните хотя бы один из контактов: Telegram или WhatsApp',
         submitError:         'Ошибка при отправке. Попробуйте ещё раз.',
-        subdistrictRequired: 'Пожалуйста, выберите подрайон',
         photoLabel:          '📷 Фото проблемы (по желанию, до 3)',
         photoAdd:            'Прикрепить фото',
         photoTooMany:        'Можно прикрепить не более 3 фото',
@@ -29,7 +28,6 @@ const i18n = {
         telegramInvalid:     'გთხოვთ, შეიყვანოთ სწორი Telegram მომხმარებლის სახელი (მაგ: @username) ან ტელეფონის ნომერი',
         contactRequired:     'გთხოვთ, შეავსოთ ერთ-ერთი საკონტაქტო ველი: Telegram ან WhatsApp',
         submitError:         'გაგზავნისას მოხდა შეცდომა. სცადეთ კიდევ ერთხელ.',
-        subdistrictRequired: 'გთხოვთ, აირჩიოთ უბანი',
         photoLabel:          '📷 პრობლემის ფოტო (სურვილისამებრ, 3-მდე)',
         photoAdd:            'ფოტოს მიმაგრება',
         photoTooMany:        'შეგიძლიათ მიამაგროთ მაქსიმუმ 3 ფოტო',
@@ -44,7 +42,6 @@ const i18n = {
         telegramInvalid:     'Please enter a valid Telegram username (e.g. @username) or phone number',
         contactRequired:     'Please fill in at least one contact field: Telegram or WhatsApp',
         submitError:         'An error occurred while submitting. Please try again.',
-        subdistrictRequired: 'Please select a subdistrict',
         photoLabel:          '📷 Photo of the problem (optional, up to 3)',
         photoAdd:            'Attach photo',
         photoTooMany:        'You can attach up to 3 photos',
@@ -84,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollToTop();
     initClientLeadFormTracking();
     initClientPhotoUpload();
-    initDistrictCascade();
+    initClientDistrictOptions();
     initMasterLeadFormTracking();
     initWhatsAppButtonTracking();
     initFAQ();
@@ -530,10 +527,10 @@ function sendLeadToBot(formData) {
 
         const payload = {
             district:    BOT_DISTRICT_MAP[get('district')] || get('district') || 'Другой',
-            subdistrict: get('subdistrict') || 'Не указан', // подрайон из формы (каскад)
+            subdistrict: 'Не указан',                       // подрайон убрали — адрес точнее
             category:    get('service') || 'Другое',
             description: descParts.join('\n'),              // имя + задача → видно в превью
-            address:     'Не указан',                       // в форме нет адреса
+            address:     'Не указан',                       // адрес у клиента не спрашиваем — только район
             contact:     contactParts.join('\n') || 'Нет контакта', // скрыто до оплаты
             honeypot:    get('_gotcha'),                    // антиспам: люди это поле не заполняют
             lang:        ['ru', 'en', 'ka'].includes(currentLang) ? currentLang : 'ru',
@@ -591,7 +588,7 @@ function compressImage(file) {
     });
 }
 
-// Инжектит блок загрузки фото в clientLeadForm (как initDistrictCascade — без правки 15 HTML).
+// Инжектит блок загрузки фото в clientLeadForm (как initClientDistrictOptions — без правки HTML).
 function initClientPhotoUpload() {
     const form = document.getElementById('clientLeadForm');
     if (!form) return;
@@ -730,78 +727,9 @@ const DISTRICT_LABELS = {
     Krtsanisi:  { ru: 'Крцаниси',  en: 'Krtsanisi',  ka: 'კრწანისი' }
 };
 
-// Подрайоны по районам. Ключ = value района (slug). v = русское название (его ждёт бот).
-const SUBDISTRICTS = {
-    Saburtalo: [
-        { v: 'Верхний Сабуртало', ru: 'Верхний Сабуртало', en: 'Upper Saburtalo', ka: 'ზემო საბურთალო' },
-        { v: 'Нижний Сабуртало',  ru: 'Нижний Сабуртало',  en: 'Lower Saburtalo', ka: 'ქვემო საბურთალო' },
-        { v: 'Политехнический',    ru: 'Политехнический',    en: 'Polytechnical',  ka: 'პოლიტექნიკური' },
-        { v: 'Делиси',             ru: 'Делиси',             en: 'Delisi',         ka: 'დელისი' }
-    ],
-    Vake: [
-        { v: 'Верхний Ваке',    ru: 'Верхний Ваке',    en: 'Upper Vake',   ka: 'ზემო ვაკე' },
-        { v: 'Нижний Ваке',     ru: 'Нижний Ваке',     en: 'Lower Vake',   ka: 'ქვემო ვაკე' },
-        { v: 'Мухатгверди',     ru: 'Мухатгверди',     en: 'Mukhatgverdi', ka: 'მუხათგვერდი' },
-        { v: 'Черепашье озеро', ru: 'Черепашье озеро', en: 'Turtle Lake',  ka: 'კუს ტბა' }
-    ],
-    Mtatsminda: [
-        { v: 'Центр',          ru: 'Центр',          en: 'Center',          ka: 'ცენტრი' },
-        { v: 'Вера',           ru: 'Вера',           en: 'Vera',            ka: 'ვერა' },
-        { v: 'Сололаки',       ru: 'Сололаки',       en: 'Sololaki',        ka: 'სოლოლაკი' },
-        { v: 'Гора Мтацминда', ru: 'Гора Мтацминда', en: 'Mtatsminda Hill', ka: 'მთაწმინდა' }
-    ],
-    Didube: [
-        { v: 'Дидубе-Чугурети', ru: 'Дидубе-Чугурети', en: 'Didube-Chugureti', ka: 'დიდუბე-ჩუღურეთი' },
-        { v: 'Автовокзал',      ru: 'Автовокзал',      en: 'Bus Station',      ka: 'ავტოსადგური' },
-        { v: 'Дигоми',          ru: 'Дигоми',          en: 'Digomi',           ka: 'დიღომი' },
-        { v: 'Лило',            ru: 'Лило',            en: 'Lilo',             ka: 'ლილო' }
-    ],
-    Isani: [
-        { v: 'Исани',    ru: 'Исани',    en: 'Isani',     ka: 'ისანი' },
-        { v: 'Самгори',  ru: 'Самгори',  en: 'Samgori',   ka: 'სამგორი' },
-        { v: 'Навтлуги', ru: 'Навтлуги', en: 'Navtlugi',  ka: 'ნავთლუღი' },
-        { v: 'Ортачала', ru: 'Ортачала', en: 'Ortachala', ka: 'ორთაჭალა' }
-    ],
-    Gldani: [
-        { v: 'Глдани',   ru: 'Глдани',   en: 'Gldani',    ka: 'გლდანი' },
-        { v: 'Темка',    ru: 'Темка',    en: 'Temka',     ka: 'თემქა' },
-        { v: 'Муштаиди', ru: 'Муштаиди', en: 'Mushtaidi', ka: 'მუშტაიდი' },
-        { v: 'Ахметели', ru: 'Ахметели', en: 'Akhmeteli', ka: 'ახმეტელი' }
-    ],
-    Nadzaladevi: [
-        { v: 'Надзаладеви',  ru: 'Надзаладеви',  en: 'Nadzaladevi',     ka: 'ნაძალადევი' },
-        { v: 'Вокзал',       ru: 'Вокзал',       en: 'Railway Station', ka: 'სადგური' },
-        { v: 'Дидубе Рынок', ru: 'Дидубе Рынок', en: 'Didube Market',   ka: 'დიდუბის ბაზარი' },
-        { v: 'Церетели',     ru: 'Церетели',     en: 'Tsereteli',       ka: 'წერეთელი' }
-    ],
-    Chugureti: [
-        { v: 'Чугурети', ru: 'Чугурети', en: 'Chugureti', ka: 'ჩუღურეთი' },
-        { v: 'Грмагеле', ru: 'Грмагеле', en: 'Grmaghele', ka: 'გრმაღელე' },
-        { v: 'Авлабари', ru: 'Авлабари', en: 'Avlabari',  ka: 'ავლაბარი' },
-        { v: 'Метехи',   ru: 'Метехи',   en: 'Metekhi',   ka: 'მეტეხი' }
-    ],
-    Krtsanisi: [
-        { v: 'Крцаниси',  ru: 'Крцаниси',  en: 'Krtsanisi', ka: 'კრწანისი' },
-        { v: 'Понтичала', ru: 'Понтичала', en: 'Ponichala', ka: 'ფონიჭალა' },
-        { v: 'Лочини',    ru: 'Лочини',    en: 'Lochini',   ka: 'ლოჭინი' },
-        { v: 'Аэропорт',  ru: 'Аэропорт',  en: 'Airport',   ka: 'აეროპორტი' }
-    ],
-    Samgori: [
-        { v: 'Самгори',   ru: 'Самгори',   en: 'Samgori',   ka: 'სამგორი' },
-        { v: 'Восток',    ru: 'Восток',    en: 'Vostok',    ka: 'ვოსტოკი' },
-        { v: 'Варкетили', ru: 'Варкетили', en: 'Varketili', ka: 'ვარკეთილი' },
-        { v: 'Лило',      ru: 'Лило',      en: 'Lilo',      ka: 'ლილო' }
-    ]
-};
-
-// Подписи-плейсхолдеры для select подрайона
-const SUBDISTRICT_UI = {
-    first:  { ru: 'Выберите подрайон', en: 'Select subdistrict', ka: 'აირჩიეთ უბანი' },
-    choose: { ru: 'Выберите подрайон',      en: 'Select subdistrict',    ka: 'აირჩიეთ უბანი' }
-};
-
-// Строит зависимый список «Подрайон» под «Районом» в клиентской форме (на всех 12 страницах).
-function initDistrictCascade() {
+// Дозаполняет недостающие районы бота в клиентской форме на всех страницах —
+// через JS, без правки HTML каждой страницы.
+function initClientDistrictOptions() {
     const form = document.getElementById('clientLeadForm');
     if (!form) return;
     const districtSel = form.querySelector('select[name="district"]');
@@ -809,7 +737,7 @@ function initDistrictCascade() {
 
     const lang = ['ru', 'en', 'ka'].includes(currentLang) ? currentLang : 'ru';
 
-    // 1. Дозаполняем недостающие районы бота (Мтацминда, Крцаниси) — перед «Other», если он есть
+    // Дозаполняем недостающие районы бота (Мтацминда, Крцаниси) — перед «Other», если он есть
     Object.keys(DISTRICT_LABELS).forEach(function (slug) {
         if (districtSel.querySelector('option[value="' + slug + '"]')) return;
         const opt = document.createElement('option');
@@ -819,38 +747,6 @@ function initDistrictCascade() {
         if (other) districtSel.insertBefore(opt, other);
         else districtSel.appendChild(opt);
     });
-
-    // 2. Создаём select подрайона сразу после района (если ещё нет)
-    let subSel = form.querySelector('select[name="subdistrict"]');
-    if (!subSel) {
-        subSel = document.createElement('select');
-        subSel.name = 'subdistrict';
-        subSel.className = districtSel.className; // тот же стиль, что у района
-        districtSel.insertAdjacentElement('afterend', subSel);
-    }
-
-    function fill() {
-        const subs = SUBDISTRICTS[districtSel.value] || [];
-        subSel.innerHTML = '';
-        const ph = document.createElement('option');
-        ph.value = '';
-        ph.disabled = true;
-        ph.selected = true;
-        ph.textContent = subs.length
-            ? (SUBDISTRICT_UI.choose[lang] || SUBDISTRICT_UI.choose.ru)
-            : (SUBDISTRICT_UI.first[lang] || SUBDISTRICT_UI.first.ru);
-        subSel.appendChild(ph);
-        subs.forEach(function (s) {
-            const o = document.createElement('option');
-            o.value = s.v;
-            o.textContent = s[lang] || s.ru;
-            subSel.appendChild(o);
-        });
-        subSel.disabled = subs.length === 0; // нет подрайонов (например, «Other») → выключен
-    }
-
-    fill();
-    districtSel.addEventListener('change', fill);
 }
 
 function initClientLeadFormTracking() {
@@ -933,14 +829,6 @@ function validateLeadForm(e) {
 
     if (!validatePhone(phoneInput)) return false;
     if (telegramValue && !validateTelegram(telegramInput)) return false;
-
-    // Подрайон обязателен, если у выбранного района он есть (select активен)
-    const subdistrictInput = form.querySelector('select[name="subdistrict"]');
-    if (subdistrictInput && !subdistrictInput.disabled && !subdistrictInput.value) {
-        alert(t('subdistrictRequired'));
-        subdistrictInput.focus();
-        return false;
-    }
 
     return true;
 }
